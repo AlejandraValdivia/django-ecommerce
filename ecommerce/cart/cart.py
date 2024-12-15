@@ -12,14 +12,14 @@ class Cart():
 
         self.cart = cart
 
-    def add(self, product, product_qty):
+    def add(self, product, product_quantity):
         product_id = str(product.id)
 
         if product_id in self.cart:
-            self.cart[product_id]['quantity'] = product_qty
+            self.cart[product_id]['quantity'] = product_quantity
 
         else:
-            self.cart[product_id] = {'price': str(product.price), 'quantity': product_qty}
+            self.cart[product_id] = {'price': str(product.price), 'quantity': product_quantity}
             
         self.session.modified = True
 
