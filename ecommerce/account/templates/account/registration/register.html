@@ -1,4 +1,56 @@
-<h1>Welcome to the Edenthought</h1>
+{% include "store/base.html" %} 
 
-<h2>Register your account</h2>
-<p>To create a new account, click on the "Register" link in the navigation bar and fill out the registration form. Once you've registered, you can log in using your username and password.</p>
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+
+  body {
+    background-color: gray;
+  }
+
+  .form-layout {
+    border-radius: 20px;
+    width: 500px;
+  }
+  
+</style>
+
+<body>
+  <br />
+  <div class="container bg-white shadow-md p-5 form-layout">
+    <h3>Create your account</h3>
+    <h5>Purchase your favorite items today!</h5>
+
+    <br />
+    <br />
+
+    <form method="POST" autocomplete="off">
+      {% csrf_token %} 
+      {{ form.username|as_crispy_field }}
+      <br />
+      <br />
+      {{ form.email|as_crispy_field }}
+      <br />
+      <br />
+      {{ form.password1|as_crispy_field }}
+      <br />
+      {{ form.password2|as_crispy_field }}
+      <br />
+      <br />
+      <button
+        type="submit"
+        class="btn btn-secondary btn-lg w-100 btn-block p-2"
+      >
+        &nbsp; Create Account &nbsp;
+      </button>
+      <br />
+    </form>
+  </div>
+</body>
+<br>
+<br>
+{% endblock content %}
