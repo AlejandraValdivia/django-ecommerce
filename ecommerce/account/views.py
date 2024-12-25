@@ -14,6 +14,8 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 
+from django.contrib.auth.decorators import login_required
+
 
 
 def register(request):
@@ -94,5 +96,12 @@ def my_login(request):
     return render(request, 'account/my-login.html', context=context)
     
 
+@login_required(login_url='my-login')
 def dashboard(request):
     return render(request, 'account/dashboard.html')
+
+
+def user_logout(request):
+    auth.logout(request)
+    return redirect('store')
+    
