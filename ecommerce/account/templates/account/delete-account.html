@@ -1,0 +1,7 @@
+<h1>Delete Account</h1>
+<p>Are you sure you want to delete your account?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+<a href="{% url 'delete-account' %}" class="btn btn-secondary">Cancel</a>
