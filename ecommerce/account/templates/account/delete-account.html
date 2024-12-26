@@ -1,7 +1,57 @@
-<h1>Delete Account</h1>
-<p>Are you sure you want to delete your account?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Delete</button>
-</form>
-<a href="{% url 'delete-account' %}" class="btn btn-secondary">Cancel</a>
+{% include "store/base.html" %} 
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+
+  body {
+    background-color: gray;
+  }
+
+  .form-layout {
+    border-radius: 20px;
+    width: 500px;
+  }
+  
+</style>    
+
+<body>
+  <br />
+  <div class="container bg-white shadow-md p-5 form-layout">
+    <h3>Account Deletion</h3>
+    
+    <hr />
+    <br />
+
+    <form method="POST" autocomplete="off">
+      {% csrf_token %} 
+      
+      <p>Are you sure you want to delete your account?</p>
+      <p>This action cannot be undone.</p>
+      <button
+        type="submit"
+        class="btn btn-danger btn-lg w-100 btn-block p-2"
+      >
+        &nbsp; Delete your account &nbsp;
+      </button>
+      <br />
+      <br />
+      <a
+        type="submit"
+        class="btn btn-secondary btn-lg w-100 btn-block p-2"
+        href="{% url 'dashboard' %}"
+      >
+        &nbsp; Cancel and go back &nbsp;
+      </a>
+      <br />
+      <br />
+    </form>
+  </div>
+</body>
+<br>
+<br>
+{% endblock content %}

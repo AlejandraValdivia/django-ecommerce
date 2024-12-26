@@ -22,7 +22,7 @@
 <body>
   <br />
   <div class="container bg-white shadow-md p-5 form-layout">
-    <h3>Login to your account</h3>
+    <h3>Update your account</h3>
     
     <br />
     <br />
@@ -44,7 +44,33 @@
       </button>
       <br />
     </form>
+
+    </div>
+    <br />
+
+    <div class="container bg-white shadow-md p-5 form-layout">
+    <h3>Delete your account</h3>
+    <p>Are you sure you want to delete your account?</p>
+    <p>This action cannot be undone.</p>
+    <br />
+    <form method="POST" autocomplete="off">
+      {% csrf_token %}
+      
+      <a
+      class="btn btn-danger navbar-btn text-white"
+      type="button"
+      href="{% url 'delete-account' %}"
+    >
+      Delete account
+    </a>
+      <br />
+    </form>
+    <br />
   </div>
+  <br />
+  <br />
+
+  
 </body>
 <br>
 <br>
