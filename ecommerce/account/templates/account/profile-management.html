@@ -21,12 +21,23 @@
 
 <body>
   <br />
+
   <div class="container bg-white shadow-md p-5 form-layout">
-    <h3>Update your account</h3>
+    <h3><i class="fa-solid fa-user"></i> &nbsp; Profile management</h3>  
+    
+    <hr />
+
+  </div>
+
+  <br />
+
+  <div class="container bg-white shadow-md p-5 form-layout">
+    <h4>Update your account</h4>
+    
+    <hr />
     
     <br />
-    <br />
-
+    
     <form method="POST" autocomplete="off">
       {% csrf_token %} 
       {{ user_form.username|as_crispy_field }}
@@ -38,7 +49,7 @@
       <br />
       <button
         type="submit"
-        class="btn btn-secondary btn-lg w-100 btn-block p-2"
+        class="btn btn-primary navbar-btn text-white"
       >
         &nbsp; Update your account &nbsp;
       </button>
@@ -49,26 +60,21 @@
     <br />
 
     <div class="container bg-white shadow-md p-5 form-layout">
-    <h3>Delete your account</h3>
-    <p>Are you sure you want to delete your account?</p>
-    <p>This action cannot be undone.</p>
-    <br />
-    <form method="POST" autocomplete="off">
-      {% csrf_token %}
+      <h4>Delete your account</h4>
       
-      <a
-      class="btn btn-danger navbar-btn text-white"
-      type="button"
-      href="{% url 'delete-account' %}"
-    >
-      Delete account
-    </a>
-      <br />
-    </form>
-    <br />
-  </div>
-  <br />
-  <br />
+      <hr />
+      <p>Proceed if you wish to delete your account.</p>
+    
+        <a
+        class="btn btn-primary navbar-btn text-white"
+        type="button"
+        href="{% url 'delete-account' %}"
+      >
+        Delete account
+      </a>
+        
+    </div>
+ 
 
   
 </body>

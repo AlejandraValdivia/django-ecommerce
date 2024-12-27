@@ -25,31 +25,38 @@
     <h3>Account Deletion</h3>
     
     <hr />
+
+    <p>Are you sure you want to delete your account?</p>
+    <p>This action cannot be undone.</p>
+
     <br />
 
     <form method="POST" autocomplete="off">
       {% csrf_token %} 
       
-      <p>Are you sure you want to delete your account?</p>
-      <p>This action cannot be undone.</p>
       <button
         type="submit"
-        class="btn btn-danger btn-lg w-100 btn-block p-2"
+        class="btn btn-danger navbar-btn text-white"
       >
         &nbsp; Delete your account &nbsp;
       </button>
+
       <br />
       <br />
+
       <a
         type="submit"
-        class="btn btn-secondary btn-lg w-100 btn-block p-2"
-        href="{% url 'dashboard' %}"
+        class="btn btn-primary navbar-btn text-white"
+        href="{% url 'profile-management' %}"
       >
-        &nbsp; Cancel and go back &nbsp;
+      <i class="fa-solid fa-arrow-left"></i> &nbsp; Cancel and go back &nbsp;
       </a>
-      <br />
-      <br />
+
     </form>
+      
+      <br />
+      <br />
+    
   </div>
 </body>
 <br>
