@@ -24,24 +24,34 @@
   <div class="container bg-white shadow-md p-5 form-layout">
     <h3>Login to your account</h3>
     
-    <br />
+    <hr />
     <br />
 
     <form method="POST" autocomplete="off">
       {% csrf_token %} 
       {{ form.username|as_crispy_field }}
       <br />
-      <br />
+      
       {{ form.password|as_crispy_field }}
       <br />
-      <br />
+      
       <button
         type="submit"
-        class="btn btn-secondary btn-lg w-100 btn-block p-2"
-      >
+        class="btn btn-primary navbar-btn text-white w-100 p-2"
+      ><i class="fa-solid fa-key"></i>
         &nbsp; Login &nbsp;
       </button>
       <br />
+      <br />
+
+      <div class="text-center">
+        <a href="{% url 'register' %}">Don't have an account?</a>
+
+        <br> <br>
+
+        <a href="{% url 'my-login' %}">Forgot your password?</a>
+        
+      </div>
     </form>
   </div>
 </body>
