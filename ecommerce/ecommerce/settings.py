@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     'account', # Django app
 
+    'payment', # Django app
+
     'mathfilters',
 
     'crispy_forms',
