@@ -44,6 +44,20 @@
       <br />
       <br />
 
+      {% if form.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.errors }}
+      </div>
+      {% endif %}
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}" role="alert">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      <br />
+
       <div class="text-center">
         <a href="{% url 'register' %}">Don't have an account?</a>
 
