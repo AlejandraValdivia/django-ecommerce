@@ -102,7 +102,7 @@
 
                     <div class="form-field">
 
-                        <input class="form-control" id="zipcode" type="text" placeholder="Zip code (Optional)" autocomplete="off" value="{{shipping.postal_code}}">
+                        <input class="form-control" id="postalcode" type="text" placeholder="Zip code (Optional)" autocomplete="off" value="{{shipping.postal_code}}">
 
                     </div>
             
@@ -139,10 +139,35 @@
 
     <script>
 
+        $(document).on('submit', function(e) {
+            e.preventDefault();
+            
+            $.ajax({
+                type: "POST",
+                url: "{% url 'complete-order' %}",
+                data: {
+                    name: $("#name").val(),
+                    email: $("#email").val(),
+                    address1: $("#address1").val(),
+                    address2: $("#address2").val(),
+                    city: $("#city").val(),
+                    state: $("#state").val(),
+                    postalcode: $("#postalcode").val(),
+                    
 
+
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    action: "post"
+                },
+                success: function(json) {
+                    
+                },
+                error: function(xhr, errmsg, err) {
+                    console.log(err)
+                }
+            })
+        })
     
-
-
    </script>
 
 
