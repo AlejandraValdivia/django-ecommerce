@@ -123,8 +123,6 @@
 
       <br />
 
-      
-
       <br />
 
       <div id="paypal-button-container"></div>
@@ -143,10 +141,8 @@
 <!-- Ajax integration -->
 
 <script>
-
   var total_price = "{{cart.get_total}}";
 
-  
   const paypalButtonsComponent = paypal.Buttons({
     // optional styling for buttons
     // https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
@@ -156,72 +152,38 @@
       layout: "vertical",
     },
 
-    onInit: function(data, actions) {
-
+    onInit: function (data, actions) {
       actions.disable();
 
-      document.querySelectorAll('.validate').forEach(item => {
-        item.addEventListener('keyup', event => {
+      // Complete order -   NO SHIPPING ADDRESS
 
-            //  The required fields are filled out
+      document.querySelectorAll(".validate").forEach((item) => {
+        item.addEventListener("keyup", (event) => {
+          //  The required fields are filled out
 
-            var order_verified = 'Yes';
+          var order_verified = "Yes";
 
-            function checkInputs(){
+          function checkInputs() {
+            $(":input[required]").each(function () {
+              if ($(this).val() == "") {
+                // The required fields are empty
 
-                $(':input[required]').each(function(){
-
-                    if($(this).val() == ''){
-
-
-                        // The required fields are empty
-
-                        return order_verified = 'No';
-
-
-                    }
-
-
-
-                });
-
-
-
-                return order_verified;
-
-
-            }
-
-            var isOrderVerified = checkInputs()
-
-
-                    if(isOrderVerified === 'Yes')
-                    {
-
-                        actions.enable();
-
-
-
-                    }
-
-                    else
-                    {
-
-
-                        actions.disable();
-
-
-                    }
-
-
-
-
-                });
-
-
-
+                return (order_verified = "No");
+              }
             });
 
+            return order_verified;
+          }
+
+          var isOrderVerified = checkInputs();
+
+          if (isOrderVerified === "Yes") {
+            actions.enable();
+          } else {
+            actions.disable();
+          }
+        });
+      });
     },
 
     // set up the transaction
@@ -232,7 +194,7 @@
         purchase_units: [
           {
             amount: {
-              value: total_price
+              value: total_price,
             },
           },
         ],
@@ -246,6 +208,29 @@
       const captureOrderHandler = (details) => {
         const payerName = details.payer.name.given_name;
         console.log("Transaction completed");
+
+        $.ajax({
+          type: "POST",
+          url: "{% url 'complete-order' %}",
+          data: {
+            name: $("#name").val(),
+            email: $("#email").val(),
+            address1: $("#address1").val(),
+            address2: $("#address2").val(),
+            city: $("#city").val(),
+            state: $("#state").val(),
+            postalcode: $("#postalcode").val(),
+
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+            action: "post",
+          },
+          success: function (json) {
+            window.location.replace("{% url 'payment-success' %}");
+          },
+          error: function (xhr, errmsg, err) {
+            window.location.replace("{% url 'payment-failed' %}");
+          },
+        });
       };
 
       return actions.order.capture().then(captureOrderHandler);
@@ -259,38 +244,13 @@
     },
   });
 
-  paypalButtonsComponent.render("#paypal-button-container").catch((err) => {
+  paypalButtonsComponent
+  .render("#paypal-button-container")
+  .catch((err) => {
     console.error("PayPal Buttons failed to render");
   });
 
-  /*
-  $(document).on("submit", function (e) {
-    e.preventDefault();
-
-    $.ajax({
-      type: "POST",
-      url: "{% url 'complete-order' %}",
-      data: {
-        name: $("#name").val(),
-        email: $("#email").val(),
-        address1: $("#address1").val(),
-        address2: $("#address2").val(),
-        city: $("#city").val(),
-        state: $("#state").val(),
-        postalcode: $("#postalcode").val(),
-
-        csrfmiddlewaretoken: "{{ csrf_token }}",
-        action: "post",
-      },
-      success: function (json) {
-        window.location.replace("{% url 'payment-success' %}");
-      },
-      error: function (xhr, errmsg, err) {
-        window.location.replace("{% url 'payment-failed' %}");
-      },
-    });
-  });
-  */
+  
 </script>
 
 {% endblock %}
