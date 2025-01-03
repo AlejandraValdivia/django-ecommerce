@@ -143,6 +143,10 @@
 <!-- Ajax integration -->
 
 <script>
+
+  var total_price = "{{cart.get_total}}";
+
+  
   const paypalButtonsComponent = paypal.Buttons({
     // optional styling for buttons
     // https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
@@ -228,7 +232,7 @@
         purchase_units: [
           {
             amount: {
-              value: "total_price",
+              value: total_price
             },
           },
         ],
