@@ -6,6 +6,8 @@ from payment.forms import ShippingForm
 
 from payment.models import ShippingAddress
 
+from payment.models import Order, OrderItem
+
 from django.contrib.auth.models import User
 
 from django.contrib.sites.shortcuts import get_current_site
@@ -94,8 +96,7 @@ def my_login(request):
             if user is not None:
                 auth.login(request, user)
                 return redirect('dashboard')
-            # else:
-            #     return redirect('login-failed')
+           
 
     context = {'form': form}
 
@@ -174,3 +175,16 @@ def manage_shipping(request):
     context = {'form': form}
     
     return render(request, 'account/manage-shipping.html', context=context)
+
+@login_required(login_url='my-login')
+def track_orders(request):
+
+    try:
+        orders = OrderItem.objects.filter(user=request.user)
+
+        context = {'orders': orders}
+        return render(request, 'account/track-orders.html', context=context)
+    except:
+        
+        messages.info(request, 'You do not have any orders yet.')
+        return render(request, 'account/track-orders.html')
