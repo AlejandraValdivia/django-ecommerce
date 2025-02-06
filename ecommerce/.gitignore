@@ -1,0 +1,102 @@
+
+__pycache__/
+
+.tox 
+/.tox/
+
+# Django
+.mypy_cache/
+.mypy_cache__pycache__/
+.DS_Store
+db.sqlite3
+*.pyc
+*.pyo
+*.pyd
+*.pyi
+*.pyz
+*.pyzw
+*.pyzw3
+*.pyzw38
+*.pyzw39
+*.pyzw310
+*.pyzw311
+*.pyzw312
+*.pyzw313
+*.pyzw314
+*.pyzw315
+*.pyzw316
+*.pyzw317
+*.pyzw318
+*.pyzw319
+*.pyzw320
+*.pyzw321
+*.pyzw322
+*.pyzw323
+*.pyzw324
+*.pyzw325
+*.pyzw326
+*.pyzw327
+*.pyzw328
+*.pyzw329
+*.pyzw330
+*.pyzw331
+*.pyzw332
+# Node
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+yarn.lock
+package-lock.json
+
+# Environment variables
+.env
+.env.*
+
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# Compiled binary addons
+build/Release/
+
+# Dependency directories
+bower_components/
+jspm_packages/
+web_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+.ebextensions/*.config.yml
+# AWS Elastic Beanstalk
+.elasticbeanstalk/*.localdevelopment.yml
+
