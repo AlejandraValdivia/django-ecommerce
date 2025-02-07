@@ -1,16 +1,9 @@
-
 __pycache__/
-
-.tox 
-/.tox/
-
-# Django
+.tox
 .mypy_cache/
-.mypy_cache__pycache__/
 .DS_Store
 db.sqlite3
-*.pyc
-*.pyo
+*.py[co]
 *.pyd
 *.pyi
 *.pyz
@@ -41,6 +34,7 @@ db.sqlite3
 *.pyzw330
 *.pyzw331
 *.pyzw332
+
 # Node
 node_modules/
 npm-debug.log
@@ -52,7 +46,6 @@ package-lock.json
 # Environment variables
 .env
 .env.*
-
 
 # Logs
 logs/
@@ -99,4 +92,6 @@ web_modules/
 .ebextensions/*.config.yml
 # AWS Elastic Beanstalk
 .elasticbeanstalk/*.localdevelopment.yml
+
+/venv
 

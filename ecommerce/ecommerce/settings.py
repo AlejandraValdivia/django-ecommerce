@@ -1,9 +1,7 @@
 import os
 import dj_database_url
 import environ
-from dotenv import load_dotenv
 
-load_dotenv()
 env = environ.Env()
 environ.Env.read_env()
 
@@ -22,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG') 
+DEBUG = os.environ.get('DEBUG', 'False') == 'True' 
 
 # Render configuration
 DB_URL = os.environ.get('DB_URL')
@@ -76,6 +74,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -113,8 +112,7 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default=DATABASE_URL,
+        default=f"postgres://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}:5432/{os.environ.get('DB_NAME')}",
         conn_max_age=600
     )
 }
@@ -156,13 +154,29 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# This production code might break development mode, so we check whether we're in DEBUG mode
+
+# Only define STATIC_ROOT if DEBUG=False (Production mode)
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Remove STATICFILES_STORAGE (because STORAGES already manages static files)
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",  # Fix for AWS S3
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = BASE_DIR / 'static/media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -234,21 +248,14 @@ AWS_S3_FILE_OVERWRITE = False
 
 
 # RDS (Database) configuration settings:
- DATABASES = {
-
+DATABASES = {
     'default': {
-
         'ENGINE': 'django.db.backends.postgresql',
-
-        'NAME': os.environ.get('DBNAME'),
-
-        'USER': os.environ.get('DBUSER'), # Enter your Database username HERE
-
-        'PASSWORD': os.environ.get('DBPASSWORD'), # Enter your Database password HERE
-
-        'HOST': os.environ.get('DBHOST'), # Enter your Database host/endpoint HERE
-
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
         'PORT': '5432',
     }
- }
+}
 
